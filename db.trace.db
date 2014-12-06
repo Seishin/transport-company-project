@@ -88,3 +88,9 @@ UPDATE DRIVERS SET name = Mark, age = 32, gender = Male, maritial_status = Marri
 	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:277)
 	at com.seishin.project.helpers.DatabaseHelper.updateDriver(DatabaseHelper.java:209)
 	at com.seishin.project.Main.main(Main.java:39)
+12-06 18:33:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM TRUCKS WHERE [*]"; expected "NOT, EXISTS, INTERSECTS"; SQL statement:
+SELECT * FROM TRUCKS WHERE  [42001-182]
+12-06 18:33:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM TRUCKS WHERE [*]"; expected "NOT, EXISTS, INTERSECTS"; SQL statement:
+SELECT * FROM TRUCKS WHERE  [42001-182]

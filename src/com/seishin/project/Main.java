@@ -52,8 +52,8 @@ public class Main {
 //		System.out.println(truck.toString());
 		
 		ArrayList<Criteria> truckCriterias = new ArrayList<Criteria>();
-		truckCriterias.add(new Criteria(Constants.TRUCK_FR, "11/2011"));
-		truckCriterias.add(new Criteria(Constants.TRUCK_REG_NUM, "PB1242BC"));
+//		truckCriterias.add(new Criteria(Constants.TRUCK_FR, "11/2011"));
+//		truckCriterias.add(new Criteria(Constants.TRUCK_REG_NUM, "PB1242BC"));
 		
 		ArrayList<Truck> trucks = dbHelper.getTrucksByCriterias(truckCriterias);
 		for (Truck truck : trucks) {

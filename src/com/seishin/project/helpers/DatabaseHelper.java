@@ -267,6 +267,9 @@ public class DatabaseHelper {
 	public ArrayList<Driver> getDriversByCriterias(ArrayList<Criteria> criterias) {
 		drivers = new ArrayList<Driver>();
 		
+		if (criterias.isEmpty())
+			return drivers;
+		
 		try {
 			db.connect();
 			
@@ -455,6 +458,9 @@ public class DatabaseHelper {
 	
 	public ArrayList<Truck> getTrucksByCriterias(ArrayList<Criteria> criterias) {
 		trucks = new ArrayList<Truck>();
+		
+		if (criterias.isEmpty())
+			return trucks;
 		
 		try {
 			db.connect();
