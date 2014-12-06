@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.seishin.project.Constants;
 import com.seishin.project.models.Criteria;
@@ -193,7 +192,28 @@ public class DatabaseHelper {
 	}
 	
 	public void updateDriver(Driver driver) {
+		queryStr = "UPDATE " + Constants.DB_TABLE_DRIVERS + " SET "
+				+ Constants.DRIVER_NAME + " = '" + driver.getName() + "', "
+				+ Constants.DRIVER_AGE + " = '" + driver.getAge() + "', "
+				+ Constants.DRIVER_GENDER + " = '" + driver.getGender() + "', "
+				+ Constants.DRIVER_MARITIAL_STATUS + " = '" + driver.getMaritialStatus() + "', "
+				+ Constants.DRIVER_CITY + " = '" + driver.getCity() + "', "
+				+ Constants.DRIVER_PHONE_NUMBER + " = '" + driver.getPhoneNumber() + "', "
+				+ Constants.DRIVER_TRUCK_ID + " = '" + driver.getTruckId() + "'"
+				+ " WHERE " + Constants.ID + " = " + driver.getId() + ";";
 		
+		try {
+			db.connect();
+			
+			preparedStatement = db.getConnection().prepareStatement(queryStr);
+			
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
 	}
 	
 	public void removeDriver(Driver driver) {
@@ -328,8 +348,8 @@ public class DatabaseHelper {
 			
 			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, truck.getMake());
-			preparedStatement.setString(3, truck.getRegistrationNumber());
-			preparedStatement.setString(2, truck.getFirstRegistration());
+			preparedStatement.setString(2, truck.getRegistrationNumber());
+			preparedStatement.setString(3, truck.getFirstRegistration());
 			
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
@@ -340,18 +360,136 @@ public class DatabaseHelper {
 	}
 	
 	public void updateTruck(Truck truck) {
+		queryStr = "UPDATE " + Constants.DB_TABLE_TRUCKS + " SET "
+				+ Constants.TRUCK_MAKE + " = '" + truck.getMake() + "', "
+				+ Constants.TRUCK_FR + " = '" + truck.getFirstRegistration() + "', "
+				+ Constants.TRUCK_REG_NUM + " = '" + truck.getRegistrationNumber() + "'"
+				+ " WHERE " + Constants.ID + " = " + truck.getId() + ";";
 		
+		try {
+			db.connect();
+			
+			preparedStatement = db.getConnection().prepareStatement(queryStr);
+			
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
 	}
 	
 	public void removeTruck(Truck truck) {
+		queryStr = "DELETE FROM " + Constants.DB_TABLE_TRUCKS + " WHERE " + Constants.ID + " = " + truck.getId();
 		
+		try {
+			db.connect();
+			
+			preparedStatement = db.getConnection().prepareStatement(queryStr);
+			
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
 	}
 	
 	public Truck getTruckById(int id) {
-		return new Truck();
+		truck = new Truck();
+		
+		try {
+			db.connect();
+			
+			queryStr = "SELECT * FROM " + Constants.DB_TABLE_TRUCKS + " WHERE " + Constants.ID + " = " + id;
+			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+			resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next()) {
+				truck.setId(resultSet.getInt(1));
+				truck.setMake(resultSet.getString(2));
+				truck.setFirstRegistration(resultSet.getString(3));
+				truck.setRegistrationNumber(resultSet.getString(4));
+			}
+			
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		
+		return truck;
 	}
 	
 	public ArrayList<Truck> getTrucks() {
-		return new ArrayList<Truck>();
+		trucks = new ArrayList<Truck>();
+		
+		try {
+			db.connect();
+		
+			queryStr = "SELECT * FROM " + Constants.DB_TABLE_TRUCKS;
+			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				truck = new Truck();
+				
+				truck.setId(resultSet.getInt(1));
+				truck.setMake(resultSet.getString(2));
+				truck.setFirstRegistration(resultSet.getString(3));
+				truck.setRegistrationNumber(resultSet.getString(4));
+				
+				trucks.add(truck);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		
+		return trucks;
+	}
+	
+	public ArrayList<Truck> getTrucksByCriterias(ArrayList<Criteria> criterias) {
+		trucks = new ArrayList<Truck>();
+		
+		try {
+			db.connect();
+			
+			queryStr = "SELECT * FROM " + Constants.DB_TABLE_TRUCKS + " WHERE ";
+			
+			for (int i = 0; i < criterias.size(); i++) {
+				if (i == criterias.size() - 1) {
+					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "'";
+				} else {
+					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "' AND ";
+				}
+			}
+			
+			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				truck = new Truck();
+				
+				truck.setId(resultSet.getInt(1));
+				truck.setMake(resultSet.getString(2));
+				truck.setFirstRegistration(resultSet.getString(3));
+				truck.setRegistrationNumber(resultSet.getString(4));
+				
+				trucks.add(truck);
+			}
+			
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		
+		return trucks;
 	}
 }

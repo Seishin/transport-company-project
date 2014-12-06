@@ -34,3 +34,57 @@ SELECT * FROM DRIVERS WHERE id = '1' AND name = 'Mark' AND  [42001-182]
 12-06 17:37:15 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = '1' AND NAME = 'Mark' AND  [*]"; expected "NOT, EXISTS, INTERSECTS"; SQL statement:
 SELECT * FROM DRIVERS WHERE id = '1' AND name = 'Mark' AND  [42001-182]
+12-06 17:57:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "UPDATE DRIVERS SET NAME = MARKAGE = 32GENDER[*] = MALEMARITIAL_STATUS = MARRIEDCITY = PLOVDIVPHONE_NUMBER = 321312321TRUCK_ID = 1 WHERE ID = 1 "; SQL statement:
+UPDATE DRIVERS SET name = Markage = 32gender = Malemaritial_status = Marriedcity = Plovdivphone_number = 321312321truck_id = 1 WHERE id = 1 [42000-182]
+12-06 17:58:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "UPDATE DRIVERS SET NAME = MARK, AGE = 32, GENDER = MALE, MARITIAL_STATUS = MARRIED, CITY = PLOVDIV, PHONE_NUMBER = 321312321, TRUCK_ID = 1,  WHERE[*] ID = 1 "; expected "identifier"; SQL statement:
+UPDATE DRIVERS SET name = Mark, age = 32, gender = Male, maritial_status = Married, city = Plovdiv, phone_number = 321312321, truck_id = 1,  WHERE id = 1 [42001-182]
+12-06 17:59:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "MARK" not found; SQL statement:
+UPDATE DRIVERS SET name = Mark, age = 32, gender = Male, maritial_status = Married, city = Plovdiv, phone_number = 321312321, truck_id = 1 WHERE id = 1 [42122-182]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:147)
+	at org.h2.command.dml.Update.prepare(Update.java:188)
+	at org.h2.command.Parser.prepareCommand(Parser.java:247)
+	at org.h2.engine.Session.prepareLocal(Session.java:446)
+	at org.h2.engine.Session.prepareCommand(Session.java:388)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1190)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:72)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:277)
+	at com.seishin.project.helpers.DatabaseHelper.updateDriver(DatabaseHelper.java:209)
+	at com.seishin.project.Main.main(Main.java:39)
+12-06 17:59:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "MARK" not found; SQL statement:
+UPDATE DRIVERS SET name = Mark, age = 32, gender = Male, maritial_status = Married, city = Plovdiv, phone_number = 321312321, truck_id = 1 WHERE id = 1 [42122-182]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:147)
+	at org.h2.command.dml.Update.prepare(Update.java:188)
+	at org.h2.command.Parser.prepareCommand(Parser.java:247)
+	at org.h2.engine.Session.prepareLocal(Session.java:446)
+	at org.h2.engine.Session.prepareCommand(Session.java:388)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1190)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:72)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:277)
+	at com.seishin.project.helpers.DatabaseHelper.updateDriver(DatabaseHelper.java:209)
+	at com.seishin.project.Main.main(Main.java:39)
+12-06 18:00:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column "MARK" not found; SQL statement:
+UPDATE DRIVERS SET name = Mark, age = 32, gender = Male, maritial_status = Married, city = Plovdiv, phone_number = 321312321, truck_id = 1 WHERE id = 1; [42122-182]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.expression.ExpressionColumn.optimize(ExpressionColumn.java:147)
+	at org.h2.command.dml.Update.prepare(Update.java:188)
+	at org.h2.command.Parser.prepareCommand(Parser.java:247)
+	at org.h2.engine.Session.prepareLocal(Session.java:446)
+	at org.h2.engine.Session.prepareCommand(Session.java:388)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1190)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:72)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:277)
+	at com.seishin.project.helpers.DatabaseHelper.updateDriver(DatabaseHelper.java:209)
+	at com.seishin.project.Main.main(Main.java:39)
