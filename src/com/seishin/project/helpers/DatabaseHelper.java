@@ -8,8 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.seishin.project.Constants;
+import com.seishin.project.models.Criteria;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
@@ -240,6 +242,50 @@ public class DatabaseHelper {
 		}
 		
 		return driver;
+	}
+	
+	public ArrayList<Driver> getDriversByCriterias(ArrayList<Criteria> criterias) {
+		drivers = new ArrayList<Driver>();
+		
+		try {
+			db.connect();
+			
+			queryStr = "SELECT * FROM " + Constants.DB_TABLE_DRIVERS + " WHERE ";
+			
+			for (int i = 0; i < criterias.size(); i++) {
+				if (i == criterias.size() - 1) {
+					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "'";
+				} else {
+					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "' AND ";
+				}
+			}
+			
+			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				driver = new Driver();
+				
+				driver.setId(resultSet.getInt(1));
+				driver.setName(resultSet.getString(2));
+				driver.setAge(resultSet.getInt(3));
+				driver.setGender(resultSet.getString(4));
+				driver.setMaritialStatus(resultSet.getString(5));
+				driver.setCity(resultSet.getString(6));
+				driver.setPhoneNumber(resultSet.getString(7));
+				driver.setTruckId(resultSet.getInt(8));
+				
+				drivers.add(driver);
+			}
+			
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		
+		return drivers;
 	}
 	
 	public ArrayList<Driver> getDrivers() {

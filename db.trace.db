@@ -1,0 +1,36 @@
+12-06 17:34:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:34:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:35:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:35:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:35:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1NAME[*] = MARK "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1name = Mark [42000-182]
+12-06 17:35:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1NAME[*] = MARK "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1name = Mark [42000-182]
+12-06 17:35:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:35:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = 1,[*] NAME = MARK,  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = 1, name = Mark,  [42000-182]
+12-06 17:36:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = '1',[*] NAME = 'Mark',  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = '1', name = 'Mark',  [42000-182]
+12-06 17:36:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = '1',[*] NAME = 'Mark',  "; SQL statement:
+SELECT * FROM DRIVERS WHERE id = '1', name = 'Mark',  [42000-182]
+12-06 17:37:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = '1' AND NAME = 'Mark' AND  [*]"; expected "NOT, EXISTS, INTERSECTS"; SQL statement:
+SELECT * FROM DRIVERS WHERE id = '1' AND name = 'Mark' AND  [42001-182]
+12-06 17:37:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT * FROM DRIVERS WHERE ID = '1' AND NAME = 'Mark' AND  [*]"; expected "NOT, EXISTS, INTERSECTS"; SQL statement:
+SELECT * FROM DRIVERS WHERE id = '1' AND name = 'Mark' AND  [42001-182]

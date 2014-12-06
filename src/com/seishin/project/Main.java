@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.seishin.project.helpers.DatabaseHelper;
 import com.seishin.project.helpers.Gender;
 import com.seishin.project.helpers.MaritalStatus;
+import com.seishin.project.models.Criteria;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
@@ -12,7 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 //		Driver driver = new Driver();
-//		driver.setName("Mark");
+//		driver.setName("Ivan");
 //		driver.setAge(42);
 //		driver.setGender(Gender.MALE);
 //		driver.setMaritialStatus(MaritalStatus.MARRIED);
@@ -26,20 +27,22 @@ public class Main {
 //		truck.setRegistrationNumber("PB1242BC");
 		
 		DatabaseHelper dbHelper = DatabaseHelper.getInstance();
-		Driver driver = dbHelper.getDriverById(1);
-		dbHelper.removeDriver(driver);
+		ArrayList<Criteria> criterias = new ArrayList<Criteria>();
+		criterias.add(new Criteria(Constants.DRIVER_AGE, 42));
+		criterias.add(new Criteria(Constants.DRIVER_CITY, "Plovdiv"));
+//		Driver driver = dbHelper.getDriverByCriterias(criterias);
 		
 //		dbHelper.insertTruck(truck);
 //		dbHelper.insertDriver(driver);
 //		Driver driver = dbHelper.getDriverById(1);
 		
-//		ArrayList<Driver> drivers = dbHelper.getDrivers();
-//		
-//		for (Driver driver : drivers) {
-//			System.out.println(driver.toString());
-//		}
+		ArrayList<Driver> drivers = dbHelper.getDriversByCriterias(criterias);
+		
+		for (Driver driver : drivers) {
+			System.out.println(driver.toString());
+		}
 		
 		
-//		System.out.println(truck.toString());
+//		System.out.println(driver.toString());
 	}
 }
