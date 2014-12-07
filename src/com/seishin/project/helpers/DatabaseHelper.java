@@ -413,8 +413,8 @@ public class DatabaseHelper {
 			if (resultSet.next()) {
 				truck.setId(resultSet.getInt(1));
 				truck.setMake(resultSet.getString(2));
-				truck.setFirstRegistration(resultSet.getString(3));
-				truck.setRegistrationNumber(resultSet.getString(4));
+				truck.setRegistrationNumber(resultSet.getString(3));
+				truck.setFirstRegistration(resultSet.getString(4));
 			}
 			
 			preparedStatement.close();
@@ -442,8 +442,8 @@ public class DatabaseHelper {
 				
 				truck.setId(resultSet.getInt(1));
 				truck.setMake(resultSet.getString(2));
-				truck.setFirstRegistration(resultSet.getString(3));
-				truck.setRegistrationNumber(resultSet.getString(4));
+				truck.setRegistrationNumber(resultSet.getString(3));
+				truck.setFirstRegistration(resultSet.getString(4));
 				
 				trucks.add(truck);
 			}
@@ -483,8 +483,8 @@ public class DatabaseHelper {
 				
 				truck.setId(resultSet.getInt(1));
 				truck.setMake(resultSet.getString(2));
-				truck.setFirstRegistration(resultSet.getString(3));
-				truck.setRegistrationNumber(resultSet.getString(4));
+				truck.setRegistrationNumber(resultSet.getString(3));
+				truck.setFirstRegistration(resultSet.getString(4));
 				
 				trucks.add(truck);
 			}

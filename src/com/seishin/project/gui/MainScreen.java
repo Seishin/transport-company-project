@@ -1,5 +1,6 @@
 package com.seishin.project.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,23 +17,25 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import com.seishin.project.Constants;
+import com.seishin.project.helpers.DatabaseHelper;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
-public class MainScreen extends JPanel implements ActionListener {
+public class MainScreen extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 5817148016540674552L;
 
 	private static MainScreen instance;
-
-	private JFrame window;
 	
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
-	private JMenu addDriverMenu;
-	private JMenu addTruckMenu;
-	private JMenu aboutMenu;
+	private JMenu newMenu;
+	private JMenu helpMenu;
+	private JMenuItem addDriverMenuItem;
+	private JMenuItem addTruckMenuItem;
+	private JMenuItem aboutMenuItem;
 	private JMenuItem exitMenuItem;
 	
 	private JTabbedPane tabbedPane;
@@ -44,29 +47,31 @@ public class MainScreen extends JPanel implements ActionListener {
 	
 	private ArrayList<Driver> drivers;
 	private ArrayList<Truck> trucks;
+	
+	private DatabaseHelper dbHelper;
 
-	public static MainScreen getInstance(ArrayList<Driver> drivers, ArrayList<Truck> trucks) {
+	public static MainScreen getInstance() {
 		if (instance == null) {
-			instance = new MainScreen(drivers, trucks);
+			instance = new MainScreen();
 		}
 
 		return instance;
 	}
 
-	public MainScreen(ArrayList<Driver> drivers, ArrayList<Truck> trucks) {
-		super(new GridLayout(1, 1));
-		
-		this.drivers = drivers;
-		this.trucks = trucks;
+	public MainScreen() {
+		dbHelper = DatabaseHelper.getInstance();
+
+		this.drivers = dbHelper.getDrivers();
+		this.trucks = dbHelper.getTrucks();
 		
 		initUI();
 	}
 
 	private void initUI() {
-		window = new JFrame("Transportation Company");
-		window.setMinimumSize(new Dimension(Constants.GUI_WINDOW_WIDTH,
+		setTitle("Transportation Company");
+		setMinimumSize(new Dimension(Constants.GUI_WINDOW_WIDTH,
 				Constants.GUI_WINDOW_HEIGHT));
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		initMenuBar();
 		initTabbedPane();
@@ -79,24 +84,31 @@ public class MainScreen extends JPanel implements ActionListener {
 		fileMenu = new JMenu("File");
 		exitMenuItem = new JMenuItem("Exit");
 		
-		addDriverMenu = new JMenu("Add Driver");
-		addTruckMenu = new JMenu("Add Truck");
-		aboutMenu = new JMenu("About");
+		newMenu = new JMenu("New");
+		addDriverMenuItem = new JMenuItem("Add Driver");
+		addTruckMenuItem = new JMenuItem("Add Truck");
+		
+		helpMenu = new JMenu("Help");
+		aboutMenuItem = new JMenuItem("About");
 
 		// Adding to the JMenu
 		menuBar.add(fileMenu);
-		menuBar.add(addDriverMenu);
-		menuBar.add(addTruckMenu);
-		menuBar.add(aboutMenu);
+		menuBar.add(newMenu);
+		menuBar.add(helpMenu);
 		
 		fileMenu.add(exitMenuItem);
+
+		newMenu.add(addDriverMenuItem);
+		newMenu.add(addTruckMenuItem);
+		
+		helpMenu.add(aboutMenuItem);
 		
 		// Listeners
 		exitMenuItem.addActionListener(this);
-		addDriverMenu.addActionListener(this);
-		addTruckMenu.addActionListener(this);
+		addDriverMenuItem.addActionListener(this);
+		addTruckMenuItem.addActionListener(this);
 
-		window.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
 	}
 
 	private void initTabbedPane() {
@@ -104,7 +116,7 @@ public class MainScreen extends JPanel implements ActionListener {
 		tabbedPane.add("Drivers", initDriverPanel());
 		tabbedPane.add("Trucks", initTrucksPanel());
 		
-		window.add(tabbedPane);
+		add(tabbedPane);
 	}
 	
 	private JComponent initDriverPanel() {
@@ -113,6 +125,7 @@ public class MainScreen extends JPanel implements ActionListener {
 		
 		driversTable = new JTable(populateDriversData(), getDriverColumnNamesVector());
 		driversTable.setFillsViewportHeight(true);
+		driversTable.setGridColor(Color.BLACK);
 		
 		JScrollPane scrollPane = new JScrollPane(driversTable);
 		
@@ -126,6 +139,8 @@ public class MainScreen extends JPanel implements ActionListener {
 		panel.setLayout(new GridLayout(1, 1));
 		
 		trucksTable = new JTable(populateTrucksData(), getTrucksColumnNamesVector());
+		trucksTable.setFillsViewportHeight(true);
+		trucksTable.setGridColor(Color.BLACK);
 		
 		JScrollPane scrollPane = new JScrollPane(trucksTable);
 		
@@ -185,8 +200,8 @@ public class MainScreen extends JPanel implements ActionListener {
 			Vector<String> truckV = new Vector<String>();
 			truckV.add(String.valueOf(truck.getId()));
 			truckV.add(truck.getMake());
-			truckV.add(truck.getFirstRegistration());
 			truckV.add(truck.getRegistrationNumber());
+			truckV.add(truck.getFirstRegistration());
 			
 			data.add(truckV);
 		}
@@ -194,10 +209,27 @@ public class MainScreen extends JPanel implements ActionListener {
 		return data;
 	}
 	
-	public void launchScreen() {
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.pack();
-		window.setVisible(true);
+	public void refreshData() {
+		drivers.clear();
+		drivers = dbHelper.getDrivers();
+		
+		trucks.clear();
+		trucks = dbHelper.getTrucks();
+		
+		((DefaultTableModel) driversTable.getModel()).setRowCount(0);
+		((DefaultTableModel) trucksTable.getModel()).setNumRows(0);
+		
+		((DefaultTableModel) driversTable.getModel()).setDataVector(populateDriversData(), getDriverColumnNamesVector());
+		((DefaultTableModel) trucksTable.getModel()).setDataVector(populateTrucksData(), getTrucksColumnNamesVector());
+		
+		driversTable.updateUI();
+		trucksTable.updateUI();
+	}
+	
+	public void showScreen() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pack();
+		setVisible(true);
 	}
 
 	@Override
@@ -206,15 +238,15 @@ public class MainScreen extends JPanel implements ActionListener {
 			System.exit(0);
 		}
 		
-		if (e.getSource().equals(addDriverMenu)) {
+		if (e.getSource().equals(addDriverMenuItem)) {
+			AddDriverScreen.getInstance().showScreen();
+		}
+		
+		if (e.getSource().equals(addTruckMenuItem)) {
 			
 		}
 		
-		if (e.getSource().equals(addTruckMenu)) {
-			
-		}
-		
-		if (e.getSource().equals(aboutMenu)) {
+		if (e.getSource().equals(aboutMenuItem)) {
 			
 		}
 	}
