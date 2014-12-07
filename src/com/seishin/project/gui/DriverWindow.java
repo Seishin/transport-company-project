@@ -65,12 +65,13 @@ public class DriverWindow extends JFrame implements ActionListener {
 
 	private void initUI() {
 		setTitle("Add A New Driver");
-		setMinimumSize(new Dimension(Constants.GUI_ADD_DRIVER_WINDOW_WIDTH,
-				Constants.GUI_ADD_DRIVER_WINDOW_HEIGHT));
+		setMinimumSize(new Dimension(Constants.GUI_ADD_EDIT_WINDOW_WIDTH,
+				Constants.GUI_ADD_EDIT_WINDOW_HEIGHT));
 		setLayout(new BorderLayout());
+		setLocationRelativeTo(null);
 
-		windowPanel = new JPanel();
 		GridLayout layout = new GridLayout(7, 2, 10, 10);
+		windowPanel = new JPanel();
 		windowPanel.setLayout(layout);
 
 		nameField = new JTextField();
@@ -124,7 +125,7 @@ public class DriverWindow extends JFrame implements ActionListener {
 	public DriverWindow editDriver(Driver driver) {
 		this.driver = driver;
 		this.isEditing = true;
-		setTitle("Editing driver: " + driver.getName());
+		setTitle("Editing Driver: " + driver.getName());
 		
 		nameField.setText(driver.getName());
 		ageField.setText(String.valueOf(driver.getAge()));
@@ -181,7 +182,7 @@ public class DriverWindow extends JFrame implements ActionListener {
 		
 		MainWindow.getInstance().refreshData();
 		
-		closeScreen();
+		closeWindow();
 	}
 
 	private boolean isDataValid() {
@@ -214,12 +215,12 @@ public class DriverWindow extends JFrame implements ActionListener {
 		return isValid;
 	}
 
-	public void showScreen() {
+	public void showWindow() {
 		pack();
 		setVisible(true);
 	}
 	
-	public void closeScreen() {
+	public void closeWindow() {
 		instance = null;
 		dispatchEvent(new WindowEvent(this, Event.WINDOW_DESTROY));
 	}
@@ -233,13 +234,13 @@ public class DriverWindow extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource().equals(cancelButton)) {
-			closeScreen();
+			closeWindow();
 		}
 		
 		if (e.getSource().equals(deleteButton)) {
 			dbHelper.removeDriver(driver);
 			MainWindow.getInstance().refreshData();
-			closeScreen();
+			closeWindow();
 		}
 	}
 }

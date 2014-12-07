@@ -28,6 +28,6 @@ public class Constants {
 	// GUI
 	public static final int GUI_WINDOW_WIDTH = 800;
 	public static final int GUI_WINDOW_HEIGHT = 600;
-	public static final int GUI_ADD_DRIVER_WINDOW_WIDTH = 400;
-	public static final int GUI_ADD_DRIVER_WINDOW_HEIGHT = 300;
+	public static final int GUI_ADD_EDIT_WINDOW_WIDTH = 400;
+	public static final int GUI_ADD_EDIT_WINDOW_HEIGHT = 300;
 }

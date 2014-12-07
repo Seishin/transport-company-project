@@ -71,6 +71,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		setMinimumSize(new Dimension(Constants.GUI_WINDOW_WIDTH,
 				Constants.GUI_WINDOW_HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 
 		initMenuBar();
 		initTabbedPane();
@@ -134,10 +135,9 @@ public class MainWindow extends JFrame implements ActionListener {
 				if (e.getClickCount() == 2) {
 					DriverWindow.getInstance()
 					.editDriver(drivers.get(driversTable.getSelectedRow()))
-					.showScreen();
+					.showWindow();
 				}
 			}
-
 		});
 
 		JScrollPane scrollPane = new JScrollPane(driversTable);
@@ -157,6 +157,16 @@ public class MainWindow extends JFrame implements ActionListener {
 		trucksTable = new JTable(trucksTableModel);
 		trucksTable.setFillsViewportHeight(true);
 		trucksTable.setGridColor(Color.BLACK);
+		
+		trucksTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					TruckWindow.getInstance()
+					.editTruck(trucks.get(trucksTable.getSelectedRow()))
+					.showWindow();
+				}
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane(trucksTable);
 
@@ -244,7 +254,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		trucksTable.updateUI();
 	}
 
-	public void showScreen() {
+	public void showWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
@@ -277,13 +287,11 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource().equals(addDriverMenuItem)) {
-			DriverWindow.getInstance().showScreen();
+			DriverWindow.getInstance().showWindow();
 		}
 
 		if (e.getSource().equals(addTruckMenuItem)) {
-			DriverWindow.getInstance()
-					.editDriver(drivers.get(driversTable.getSelectedRow()))
-					.showScreen();
+			TruckWindow.getInstance().showWindow();
 		}
 
 		if (e.getSource().equals(aboutMenuItem)) {
