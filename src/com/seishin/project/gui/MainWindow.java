@@ -107,6 +107,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		exitMenuItem.addActionListener(this);
 		addDriverMenuItem.addActionListener(this);
 		addTruckMenuItem.addActionListener(this);
+		aboutMenuItem.addActionListener(this);
 
 		setJMenuBar(menuBar);
 	}
@@ -295,7 +296,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource().equals(aboutMenuItem)) {
-
+			AboutWindow.getInstance().showWindow();
 		}
 	}
 }

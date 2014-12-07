@@ -133,8 +133,6 @@ public class TruckWindow extends JFrame implements ActionListener {
 		truck.setRegistrationNumber(registrationNumberField.getText());
 		truck.setFirstRegistration(firstRegistrationField.getText());
 		
-		System.out.println(truck);
-		
 		if (isEditing) {
 			dbHelper.updateTruck(truck);
 		} else {
