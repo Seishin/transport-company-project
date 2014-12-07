@@ -24,4 +24,8 @@ public class Constants {
 	public static final String TRUCK_MAKE = "make";
 	public static final String TRUCK_REG_NUM = "registration_number";
 	public static final String TRUCK_FR = "first_registration";
+	
+	// GUI
+	public static final int GUI_WINDOW_WIDTH = 800;
+	public static final int GUI_WINDOW_HEIGHT = 600;
 }
