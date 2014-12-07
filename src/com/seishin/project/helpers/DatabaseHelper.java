@@ -239,7 +239,18 @@ public class DatabaseHelper {
 		try {
 			db.connect();
 			
-			queryStr = "SELECT * FROM " + Constants.DB_TABLE_DRIVERS + " WHERE " + Constants.ID + " = " + id;
+			queryStr = "SELECT " 
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.ID + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_NAME + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_GENDER
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_MARITIAL_STATUS + ", "+ ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_CITY + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_PHONE_NUMBER + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.TRUCK_REG_NUM + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.ID
+					+ " FROM " + Constants.DB_TABLE_DRIVERS  + ", " + Constants.DB_TABLE_TRUCKS
+					+ " WHERE " + Constants.DB_TABLE_DRIVERS + "." + Constants.ID + " = " + id
+					+ " AND " + Constants.DB_TABLE_TRUCKS + "." + Constants.ID;
 			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -252,6 +263,7 @@ public class DatabaseHelper {
 				driver.setCity(resultSet.getString(6));
 				driver.setPhoneNumber(resultSet.getString(7));
 				driver.setTruckId(resultSet.getInt(8));
+				driver.setTruckId(resultSet.getInt(9));
 			}
 			
 			preparedStatement.close();
@@ -273,7 +285,19 @@ public class DatabaseHelper {
 		try {
 			db.connect();
 			
-			queryStr = "SELECT * FROM " + Constants.DB_TABLE_DRIVERS + " WHERE ";
+			queryStr = "SELECT "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.ID + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_NAME + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_AGE + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_GENDER + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_MARITIAL_STATUS + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_CITY + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_PHONE_NUMBER + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.TRUCK_REG_NUM + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.ID
+					+ " FROM " + Constants.DB_TABLE_DRIVERS + ", " + Constants.DB_TABLE_TRUCKS
+					+ " WHERE " + Constants.DB_TABLE_TRUCKS + "." + Constants.ID + " = " 
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_TRUCK_ID + " AND ";
 			
 			for (int i = 0; i < criterias.size(); i++) {
 				if (i == criterias.size() - 1) {
@@ -296,7 +320,8 @@ public class DatabaseHelper {
 				driver.setMaritialStatus(resultSet.getString(5));
 				driver.setCity(resultSet.getString(6));
 				driver.setPhoneNumber(resultSet.getString(7));
-				driver.setTruckId(resultSet.getInt(8));
+				driver.setTruckRegNum(resultSet.getString(8));
+				driver.setTruckId(resultSet.getInt(9));
 				
 				drivers.add(driver);
 			}
@@ -317,7 +342,19 @@ public class DatabaseHelper {
 		try {
 			db.connect();
 		
-			queryStr = "SELECT * FROM " + Constants.DB_TABLE_DRIVERS;
+			queryStr = "SELECT " 
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.ID + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_NAME + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_AGE + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_GENDER + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_MARITIAL_STATUS + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_CITY + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_PHONE_NUMBER + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.TRUCK_REG_NUM + ", "
+					+ Constants.DB_TABLE_TRUCKS + "." + Constants.ID
+					+ " FROM " + Constants.DB_TABLE_DRIVERS + ", " + Constants.DB_TABLE_TRUCKS
+					+ " WHERE " + Constants.DB_TABLE_TRUCKS + "." + Constants.ID + " = " 
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_TRUCK_ID;
 			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -330,7 +367,8 @@ public class DatabaseHelper {
 				driver.setMaritialStatus(resultSet.getString(5));
 				driver.setCity(resultSet.getString(6));
 				driver.setPhoneNumber(resultSet.getString(7));
-				driver.setTruckId(resultSet.getInt(8));
+				driver.setTruckRegNum(resultSet.getString(8));
+				driver.setTruckId(resultSet.getInt(9));
 				
 				drivers.add(driver);
 			}

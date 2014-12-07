@@ -8,6 +8,7 @@ public class Driver {
 	private int id;
 	private int age;
 	private int truckId;
+	private String truckRegNum;
 	private String gender;
 	private String maritialStatus;
 	private String name;
@@ -28,6 +29,14 @@ public class Driver {
 	
 	public void setTruckId(int id) {
 		this.truckId = id;
+	}
+	
+	public String getTruckRegNum() {
+		return truckRegNum;
+	}
+	
+	public void setTruckRegNum(String num) {
+		this.truckRegNum = num;
 	}
 	
 	public String getGender() {

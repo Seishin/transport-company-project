@@ -24,10 +24,10 @@ import com.seishin.project.helpers.MaritalStatus;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
-public class AddDriverScreen extends JFrame implements ActionListener {
+public class DriverScreen extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -7245908711646958984L;
 
-	private static AddDriverScreen instance;
+	private static DriverScreen instance;
 
 	private JPanel windowPanel;
 	private JTextField nameField;
@@ -38,27 +38,32 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 	private JTextField phoneNumber;
 	private JComboBox truckCombo;
 
+	private JPanel buttonsPanel;
+	
 	private JButton saveButton;
 	private JButton cancelButton;
+	private JButton deleteButton;
 	
 	private DatabaseHelper dbHelper;
-
-	public static AddDriverScreen getInstance() {
+	private Driver driver;
+	
+	private boolean isEditing = false;
+	
+	public static DriverScreen getInstance() {
 		if (instance == null) {
-			instance = new AddDriverScreen();
+			instance = new DriverScreen();
 		}
 
 		return instance;
 	}
-
-	private AddDriverScreen() {
+	
+	private DriverScreen() {
 		dbHelper = DatabaseHelper.getInstance();
 
 		initUI();
 	}
 
 	private void initUI() {
-		setTitle("Add A New Driver");
 		setMinimumSize(new Dimension(Constants.GUI_ADD_DRIVER_WINDOW_WIDTH,
 				Constants.GUI_ADD_DRIVER_WINDOW_HEIGHT));
 		setLayout(new BorderLayout());
@@ -103,7 +108,7 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 		saveButton = new JButton("Save");
 		cancelButton = new JButton("Cancel");
 
-		JPanel buttonsPanel = new JPanel(new BorderLayout());
+		buttonsPanel = new JPanel(new BorderLayout());
 		buttonsPanel.add(saveButton, BorderLayout.LINE_START);
 		buttonsPanel.add(cancelButton, BorderLayout.LINE_END);
 
@@ -113,6 +118,26 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 		// Listeners
 		saveButton.addActionListener(this);
 		cancelButton.addActionListener(this);
+	}
+	
+	public DriverScreen editDriver(Driver driver) {
+		this.driver = driver;
+		this.isEditing = true;
+		setTitle("Editing driver: " + driver.getName());
+		
+		nameField.setText(driver.getName());
+		ageField.setText(String.valueOf(driver.getAge()));
+		genderCombo.setSelectedIndex(driver.getGender().toLowerCase().equals("male") ? 0 : 1);
+		maritialStatusCombo.setSelectedIndex(driver.getMaritialStatus().toLowerCase().equals("single") ? 0 : 1);
+		cityField.setText(driver.getCity());
+		phoneNumber.setText(driver.getPhoneNumber());
+		truckCombo.setSelectedIndex(driver.getTruckId() - 1);
+		
+		deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(this);
+		buttonsPanel.add(deleteButton, BorderLayout.CENTER);
+		
+		return this;
 	}
 
 	private DefaultComboBoxModel populateTrucksComboModel() {
@@ -129,7 +154,10 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 	}
 
 	private void saveData() {
-		Driver driver = new Driver();
+		if (!isEditing) {
+			driver = new Driver();
+		}
+		
 		driver.setName(nameField.getText());
 		driver.setAge(Integer.valueOf(ageField.getText()));
 		driver.setGender(genderCombo.getSelectedItem().toString().toLowerCase()
@@ -144,7 +172,11 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 			driver.setTruckId(truckCombo.getSelectedIndex() + 1);
 		}
 
-		dbHelper.insertDriver(driver);
+		if (isEditing) {
+			dbHelper.updateDriver(driver);
+		} else {
+			dbHelper.insertDriver(driver);
+		}
 		
 		MainScreen.getInstance().refreshData();
 		
@@ -192,11 +224,17 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 	}
 
 	public void showScreen() {
+		if (!isEditing) {
+			setTitle("Add A New Driver");
+		}
+		
 		pack();
 		setVisible(true);
 	}
 	
 	public void closeScreen() {
+		isEditing = false;
+		
 		clearFields();
 		dispose();
 		dispatchEvent(new WindowEvent(this, Event.WINDOW_DESTROY));
@@ -211,6 +249,12 @@ public class AddDriverScreen extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource().equals(cancelButton)) {
+			closeScreen();
+		}
+		
+		if (e.getSource().equals(deleteButton)) {
+			dbHelper.removeDriver(driver);
+			MainScreen.getInstance().refreshData();
 			closeScreen();
 		}
 	}
