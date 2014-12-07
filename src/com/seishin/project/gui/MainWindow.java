@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -27,10 +26,10 @@ import com.seishin.project.helpers.DatabaseHelper;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
-public class MainScreen extends JFrame implements ActionListener {
+public class MainWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 5817148016540674552L;
 
-	private static MainScreen instance;
+	private static MainWindow instance;
 
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -50,15 +49,15 @@ public class MainScreen extends JFrame implements ActionListener {
 
 	private DatabaseHelper dbHelper;
 
-	public static MainScreen getInstance() {
+	public static MainWindow getInstance() {
 		if (instance == null) {
-			instance = new MainScreen();
+			instance = new MainWindow();
 		}
 
 		return instance;
 	}
 
-	public MainScreen() {
+	public MainWindow() {
 		dbHelper = DatabaseHelper.getInstance();
 
 		this.drivers = dbHelper.getDrivers();
@@ -133,7 +132,7 @@ public class MainScreen extends JFrame implements ActionListener {
 		driversTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					DriverScreen.getInstance()
+					DriverWindow.getInstance()
 					.editDriver(drivers.get(driversTable.getSelectedRow()))
 					.showScreen();
 				}
@@ -252,8 +251,9 @@ public class MainScreen extends JFrame implements ActionListener {
 	}
 	
 	DefaultTableModel driversTableModel = new DefaultTableModel() {
+		private static final long serialVersionUID = 1L;
 
-	    @Override
+		@Override
 	    public boolean isCellEditable(int row, int column) {
 	       //all cells false
 	       return false;
@@ -261,8 +261,9 @@ public class MainScreen extends JFrame implements ActionListener {
 	};
 	
 	DefaultTableModel trucksTableModel = new DefaultTableModel() {
+		private static final long serialVersionUID = 1L;
 
-	    @Override
+		@Override
 	    public boolean isCellEditable(int row, int column) {
 	       //all cells false
 	       return false;
@@ -276,11 +277,11 @@ public class MainScreen extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource().equals(addDriverMenuItem)) {
-			DriverScreen.getInstance().showScreen();
+			DriverWindow.getInstance().showScreen();
 		}
 
 		if (e.getSource().equals(addTruckMenuItem)) {
-			DriverScreen.getInstance()
+			DriverWindow.getInstance()
 					.editDriver(drivers.get(driversTable.getSelectedRow()))
 					.showScreen();
 		}

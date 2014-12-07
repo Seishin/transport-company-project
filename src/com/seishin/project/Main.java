@@ -1,15 +1,11 @@
 package com.seishin.project;
 
-import com.seishin.project.gui.MainScreen;
-import com.seishin.project.helpers.DatabaseHelper;
+import com.seishin.project.gui.MainWindow;
 
 public class Main {
 
-	private static DatabaseHelper dbHelper;
-	
 	public static void main(String[] args) {
-		dbHelper = DatabaseHelper.getInstance();
 		
-		MainScreen.getInstance().showScreen();
+		MainWindow.getInstance().showScreen();
 	}
 }

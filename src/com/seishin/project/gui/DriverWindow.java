@@ -24,10 +24,10 @@ import com.seishin.project.helpers.MaritalStatus;
 import com.seishin.project.models.Driver;
 import com.seishin.project.models.Truck;
 
-public class DriverScreen extends JFrame implements ActionListener {
+public class DriverWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -7245908711646958984L;
 
-	private static DriverScreen instance;
+	private static DriverWindow instance;
 
 	private JPanel windowPanel;
 	private JTextField nameField;
@@ -49,21 +49,22 @@ public class DriverScreen extends JFrame implements ActionListener {
 	
 	private boolean isEditing = false;
 	
-	public static DriverScreen getInstance() {
+	public static DriverWindow getInstance() {
 		if (instance == null) {
-			instance = new DriverScreen();
+			instance = new DriverWindow();
 		}
 
 		return instance;
 	}
 	
-	private DriverScreen() {
+	private DriverWindow() {
 		dbHelper = DatabaseHelper.getInstance();
 
 		initUI();
 	}
 
 	private void initUI() {
+		setTitle("Add A New Driver");
 		setMinimumSize(new Dimension(Constants.GUI_ADD_DRIVER_WINDOW_WIDTH,
 				Constants.GUI_ADD_DRIVER_WINDOW_HEIGHT));
 		setLayout(new BorderLayout());
@@ -120,7 +121,7 @@ public class DriverScreen extends JFrame implements ActionListener {
 		cancelButton.addActionListener(this);
 	}
 	
-	public DriverScreen editDriver(Driver driver) {
+	public DriverWindow editDriver(Driver driver) {
 		this.driver = driver;
 		this.isEditing = true;
 		setTitle("Editing driver: " + driver.getName());
@@ -178,7 +179,7 @@ public class DriverScreen extends JFrame implements ActionListener {
 			dbHelper.insertDriver(driver);
 		}
 		
-		MainScreen.getInstance().refreshData();
+		MainWindow.getInstance().refreshData();
 		
 		closeScreen();
 	}
@@ -213,30 +214,13 @@ public class DriverScreen extends JFrame implements ActionListener {
 		return isValid;
 	}
 
-	private void clearFields() {
-		nameField.setText(null);
-		ageField.setText(null);
-		genderCombo.setSelectedIndex(0);
-		maritialStatusCombo.setSelectedIndex(0);
-		cityField.setText(null);
-		phoneNumber.setText(null);
-		truckCombo.setSelectedIndex(0);
-	}
-
 	public void showScreen() {
-		if (!isEditing) {
-			setTitle("Add A New Driver");
-		}
-		
 		pack();
 		setVisible(true);
 	}
 	
 	public void closeScreen() {
-		isEditing = false;
-		
-		clearFields();
-		dispose();
+		instance = null;
 		dispatchEvent(new WindowEvent(this, Event.WINDOW_DESTROY));
 	}
 
@@ -254,7 +238,7 @@ public class DriverScreen extends JFrame implements ActionListener {
 		
 		if (e.getSource().equals(deleteButton)) {
 			dbHelper.removeDriver(driver);
-			MainScreen.getInstance().refreshData();
+			MainWindow.getInstance().refreshData();
 			closeScreen();
 		}
 	}
