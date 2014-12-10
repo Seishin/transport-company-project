@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import com.seishin.project.Constants;
 import com.seishin.project.helpers.DatabaseHelper;
@@ -60,9 +61,10 @@ public class TruckWindow extends JFrame implements ActionListener {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		
-		windowPanel = new JPanel();
 		GridLayout layout = new GridLayout(3, 2, 10, 10);
+		windowPanel = new JPanel();
 		windowPanel.setLayout(layout);
+		windowPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		makeField = new JTextField();
 		registrationNumberField = new JTextField();

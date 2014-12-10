@@ -301,9 +301,9 @@ public class DatabaseHelper {
 			
 			for (int i = 0; i < criterias.size(); i++) {
 				if (i == criterias.size() - 1) {
-					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "'";
+					queryStr += criterias.get(i).getKey() + " LIKE '%" + criterias.get(i).getValue() + "%'";
 				} else {
-					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "' AND ";
+					queryStr += criterias.get(i).getKey() + " LIKE '%" + criterias.get(i).getValue() + "%' AND ";
 				}
 			}
 			
@@ -507,9 +507,9 @@ public class DatabaseHelper {
 			
 			for (int i = 0; i < criterias.size(); i++) {
 				if (i == criterias.size() - 1) {
-					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "'";
+					queryStr += criterias.get(i).getKey() + " LIKE '%" + criterias.get(i).getValue() + "%'";
 				} else {
-					queryStr += criterias.get(i).getKey() + " = '" + criterias.get(i).getValue() + "' AND ";
+					queryStr += criterias.get(i).getKey() + " LIKE '%" + criterias.get(i).getValue() + "%' AND ";
 				}
 			}
 			
