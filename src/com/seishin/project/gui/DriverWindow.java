@@ -47,6 +47,7 @@ public class DriverWindow extends JFrame implements ActionListener {
 	
 	private DatabaseHelper dbHelper;
 	private Driver driver;
+	private ArrayList<Truck> trucks;
 	
 	private boolean isEditing = false;
 	
@@ -145,7 +146,7 @@ public class DriverWindow extends JFrame implements ActionListener {
 	}
 
 	private DefaultComboBoxModel populateTrucksComboModel() {
-		ArrayList<Truck> trucks = dbHelper.getTrucks();
+		trucks = dbHelper.getTrucks();
 
 		DefaultComboBoxModel model = new DefaultComboBoxModel();
 
@@ -173,7 +174,7 @@ public class DriverWindow extends JFrame implements ActionListener {
 		driver.setPhoneNumber(phoneNumber.getText());
 		
 		if (truckCombo.getItemCount() > 0) {
-			driver.setTruckId(truckCombo.getSelectedIndex() + 1);
+			driver.setTruckId(trucks.get(truckCombo.getSelectedIndex()).getId());
 		}
 
 		if (isEditing) {

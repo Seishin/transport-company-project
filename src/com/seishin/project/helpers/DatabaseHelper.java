@@ -233,7 +233,7 @@ public class DatabaseHelper {
 		}
 	}
 	
-	public Driver getDriverById(int id) {
+	public Driver getDriverByCriteria(Criteria criteria) {
 		driver = new Driver();
 		
 		try {
@@ -242,15 +242,18 @@ public class DatabaseHelper {
 			queryStr = "SELECT " 
 					+ Constants.DB_TABLE_DRIVERS + "." + Constants.ID + ", "
 					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_NAME + ", "
-					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_GENDER
-					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_MARITIAL_STATUS + ", "+ ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_AGE + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_GENDER + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_MARITIAL_STATUS + ", "
 					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_CITY + ", "
 					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_PHONE_NUMBER + ", "
+					+ Constants.DB_TABLE_DRIVERS + "." + Constants.DRIVER_TRUCK_ID + ", "
 					+ Constants.DB_TABLE_TRUCKS + "." + Constants.TRUCK_REG_NUM + ", "
 					+ Constants.DB_TABLE_TRUCKS + "." + Constants.ID
 					+ " FROM " + Constants.DB_TABLE_DRIVERS  + ", " + Constants.DB_TABLE_TRUCKS
-					+ " WHERE " + Constants.DB_TABLE_DRIVERS + "." + Constants.ID + " = " + id
-					+ " AND " + Constants.DB_TABLE_TRUCKS + "." + Constants.ID;
+					+ " WHERE " + criteria.getKey() + " = '" + criteria.getValue()
+					+ "' AND " + Constants.DB_TABLE_TRUCKS + "." + Constants.ID + " = " + Constants.DB_TABLE_DRIVERS + "." 
+					+ Constants.DRIVER_TRUCK_ID;
 			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -263,7 +266,7 @@ public class DatabaseHelper {
 				driver.setCity(resultSet.getString(6));
 				driver.setPhoneNumber(resultSet.getString(7));
 				driver.setTruckId(resultSet.getInt(8));
-				driver.setTruckId(resultSet.getInt(9));
+				driver.setTruckRegNum(resultSet.getString(9));
 			}
 			
 			preparedStatement.close();
@@ -438,13 +441,13 @@ public class DatabaseHelper {
 		}
 	}
 	
-	public Truck getTruckById(int id) {
+	public Truck getTruckByCriteria(Criteria criteria) {
 		truck = new Truck();
 		
 		try {
 			db.connect();
 			
-			queryStr = "SELECT * FROM " + Constants.DB_TABLE_TRUCKS + " WHERE " + Constants.ID + " = " + id;
+			queryStr = "SELECT * FROM " + Constants.DB_TABLE_TRUCKS + " WHERE " + criteria.getKey() + " = " + criteria.getValue();
 			preparedStatement = db.getConnection().prepareStatement(queryStr, Statement.RETURN_GENERATED_KEYS);
 			resultSet = preparedStatement.executeQuery();
 			
