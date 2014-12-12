@@ -136,7 +136,16 @@ public class DriverWindow extends JFrame implements ActionListener {
 		maritialStatusCombo.setSelectedIndex(driver.getMaritialStatus().toLowerCase().equals("single") ? 0 : 1);
 		cityField.setText(driver.getCity());
 		phoneNumber.setText(driver.getPhoneNumber());
-		truckCombo.setSelectedIndex(driver.getTruckId() - 1);
+		
+		String selectedTruck = null;
+		
+		for (Truck truck : trucks) {
+			if (truck.getId() == driver.getTruckId()) {
+				selectedTruck = truck.getMake() + " - " + truck.getRegistrationNumber();
+			}
+		}
+		
+		truckCombo.setSelectedItem(selectedTruck);
 		
 		deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(this);
